@@ -1,0 +1,14 @@
+replicaCount: 3
+
+image:
+  repository: lordrequests/worker
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 5000
+
+env:
+  CONTROLLER_URL: "http://lordrequests-controller:5000"
+  MAX_THREADS: 10
