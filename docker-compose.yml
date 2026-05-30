@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  controller:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - ROLE=controller
+    command: python -m hrequests cluster --role controller
+
+  worker:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - ROLE=worker
+      - CONTROLLER_URL=http://controller:5000
+    command: python -m hrequests cluster --role worker
+    deploy:
+      replicas: 3
