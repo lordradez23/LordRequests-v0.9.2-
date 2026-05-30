@@ -10,4 +10,5 @@ from .jitter import Jitter
 from .sync import FingerprintSync
 from .captcha import CaptchaSolver
 from .honeypot import HoneypotFilter
+from .pivot import HeadlessPivot
 # Future imports will be added here
