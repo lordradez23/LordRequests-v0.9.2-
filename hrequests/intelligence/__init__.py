@@ -12,4 +12,5 @@ from .phantom import PhantomMirror
 from .ai_audit import AIProvenanceAuditor
 from .optimizer import ContentOptimizer
 from .stress_test import FingerprintStressTester
+from .supply_watch import SupplyWatchdog
 # Future imports will be added here
