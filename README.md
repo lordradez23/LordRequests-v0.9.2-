@@ -30,18 +30,18 @@
     LordRequests (LR) is an advanced, high-performance stealth networking library designed to bypass even the most sophisticated bot detection systems. By combining a Pythonic interface with a powerful Go-based sidecar engine, LordRequests provides seamless TLS/SSL impersonation, browser-like fingerprinting, and high-concurrency throughput.
 </h4>
 
-### ✨ Features
+### Features
 
-- Seamless transition between HTTP and headless browsing 💻
-- Integrated fast HTML parser 🚀
-- High performance network concurrency with goroutines & gevent 🚀
-- Replication of browser TLS fingerprints 🚀
-- JavaScript rendering 🚀
-- Supports HTTP/2 🚀
-- Realistic browser header generation using [BrowserForge](https://github.com/lordradeez.exe/browserforge) 🚀
-- JSON serializing up to 10x faster than the standard library 🚀
+- Seamless transition between HTTP and headless browsing
+- Integrated fast HTML parser
+- High performance network concurrency with goroutines & gevent
+- Replication of browser TLS fingerprints
+- JavaScript rendering
+- Supports HTTP/2
+- Realistic browser header generation using [BrowserForge](https://github.com/lordradeez.exe/browserforge)
+- JSON serializing up to 10x faster than the standard library
 
-### 💻 Browser crawling
+### Browser crawling
 
 - Simple & uncomplicated browser automation
 - Anti-detect browsing using [Camoufox](https://camoufox.com) and [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) (**new in v0.9.0!**)
@@ -51,30 +51,30 @@
 - Headless and headful support
 - No CORS restrictions
 
-### ⚡ More
+### More
 
-- High performance ✨
+- High performance
 - HTTP backend written in Go
 - Automatic gzip & brotli decode
 - Written with type safety
-- 100% threadsafe ❤️
+- 100% threadsafe
 
 ---
 
-### 🏠 Residential Proxy Rotation ($0.49 per GB)
+### Residential Proxy Rotation ($0.49 per GB)
 
-LordRequests includes built-in proxy rotation powered by [Evomi](https://evomi.com?utm_source=github&utm_medium=banner&utm_campaign=lordradeez.exe-hrequests). 🚀
+LordRequests includes built-in proxy rotation powered by [Evomi](https://evomi.com?utm_source=github&utm_medium=banner&utm_campaign=lordradeez.exe-hrequests).
 
 [Evomi](https://evomi.com?utm_source=github&utm_medium=banner&utm_campaign=lordradeez.exe-hrequests) is a high quality Swiss proxy provider, with residential proxies avaliable in 150+ countries starting at $0.49/GB. For more information on using Evomi in LordRequests, see the [Evomi proxy guide](#evomi-proxies).
 
-- 👩‍💻 **24/7 Expert Support**: Evomi will join your Slack Channel
-- 🌍 **Global Presence**: Available in 150+ Countries
-- ⚡ **Low Latency**
-- 🔒 **Swiss Quality & Privacy**
-- 🎁 **Free Trial**
-- 🛡️ **99.9% Uptime**
-- 🤝 **Special IP Pool selection**: Optimize for fast, quality, or quantity of IPs
-- 🔧 **Easy Integration**: Compatible with most software and programming languages
+- **24/7 Expert Support**: Evomi will join your Slack Channel
+- **Global Presence**: Available in 150+ Countries
+- **Low Latency**
+- **Swiss Quality & Privacy**
+- **Free Trial**
+- **99.9% Uptime**
+- **Special IP Pool selection**: Optimize for fast, quality, or quantity of IPs
+- **Easy Integration**: Compatible with most software and programming languages
 
 [![Evomi Banner](https://my.evomi.com/images/brand/cta.png)](https://evomi.com?utm_source=github&utm_medium=banner&utm_campaign=lordradeez.exe-hrequests)
 
@@ -84,13 +84,13 @@ LordRequests includes built-in proxy rotation powered by [Evomi](https://evomi.c
 
 LordRequests uses a **hybrid sidecar architecture** that combines the flexibility of Python with the powerful networking capabilities of Go.
 
-### 🦴 Skeleton Overview
+### Skeleton Overview
 - **Frontend**: Python API (mimics `requests` for zero learning curve).
 - **Bridge**: CFFI-based dynamic shared library loading.
 - **Backend Engline**: Local Go HTTP server managing `tls-client` for advanced impersonation.
 - **Automation**: Camoufox/Patchright integration for headless browsing.
 
-### 🏗️ Comprehensive Architecture
+### Comprehensive Architecture
 The system is built on a **Proxy-Sidecar model**:
 
 1.  **Orchestration**: When `hrequests` is imported, it automatically deploys a pre-compiled Go binary tailored to your OS architecture.
