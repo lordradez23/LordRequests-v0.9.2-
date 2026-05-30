@@ -13,4 +13,5 @@ from .honeypot import HoneypotFilter
 from .pivot import HeadlessPivot
 from .persistence import SessionPersistence
 from .proxy_health import ProxyAutoHealer
+from .profiles import LegendaryProfiles
 # Future imports will be added here
