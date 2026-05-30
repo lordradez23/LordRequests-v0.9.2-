@@ -31,13 +31,18 @@ class SocketBridge:
         scheme = parsed.scheme.lower()
         
         if 'socks5' in scheme:
-            proxy_type = socks.SOCKS5 if PY_SOCKS_AVAILABLE else 3
+            proxy_type = 3 # SOCKS5
         elif 'socks4' in scheme:
-            proxy_type = socks.SOCKS4 if PY_SOCKS_AVAILABLE else 2
+            proxy_type = 2 # SOCKS4
         elif 'http' in scheme:
-            proxy_type = socks.HTTP if PY_SOCKS_AVAILABLE else 1
+            proxy_type = 1 # HTTP
         else:
             return None, None, None, None, None, None
+        
+        if PY_SOCKS_AVAILABLE:
+            if proxy_type == 3: proxy_type = socks.SOCKS5
+            elif proxy_type == 2: proxy_type = socks.SOCKS4
+            elif proxy_type == 1: proxy_type = socks.HTTP
 
         return (
             proxy_type,
