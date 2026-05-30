@@ -11,4 +11,5 @@ from .price_auditor import PriceAuditor
 from .phantom import PhantomMirror
 from .ai_audit import AIProvenanceAuditor
 from .optimizer import ContentOptimizer
+from .stress_test import FingerprintStressTester
 # Future imports will be added here
