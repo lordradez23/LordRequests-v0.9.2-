@@ -7,4 +7,5 @@ and digital intelligence gathering.
 '''
 
 from .shadow_api import to_api_script
+from .price_auditor import PriceAuditor
 # Future imports will be added here
