@@ -14,6 +14,7 @@ from hrequests.response import ProcessResponse
 from .client import TLSClient
 from .cookies import RequestsCookieJar
 from .toolbelt import CaseInsensitiveDict
+from .networking.replay import TrafficReplayEngine
 
 
 class TLSSession(TLSClient):
@@ -104,6 +105,9 @@ class TLSSession(TLSClient):
         else:
             self.resetHeaders(os=os)
             assert self.version
+
+        # initialize replay engine
+        self.replay = TrafficReplayEngine(session=self)
 
         super().__init__(client_identifier=f'{browser}_{self.tls_version}', **kwargs)
 
@@ -217,6 +221,10 @@ class TLSSession(TLSClient):
         if not process:
             # return an unfinished ProcessResponse object
             return proc
+        
+        # record request for replay engine
+        self.replay.record_request(method, url, data=data, files=files, headers=headers, json=json, allow_redirects=allow_redirects, timeout=timeout, proxy=proxy)
+        
         proc.send()
         return proc.response
 
