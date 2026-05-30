@@ -8,4 +8,5 @@ proxy management, and traffic control.
 
 from .doh import DoHHandler
 from .tor import TorBridge
+from .rate_limit import RateLimiter
 # Future imports will be added here
