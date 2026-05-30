@@ -1,6 +1,10 @@
 <img src="https://i.imgur.com/r8GcQW1.png" align="center">
 </img>
 
+> [!CAUTION]
+> **LEGAL DISCLAIMER**: LordRequests is intended for **legitimate research, security auditing, and educational purposes only**. The author (lordradeez.exe) is not responsible for any misuse, illegal activity, or damage caused by this tool. Users are strictly required to comply with all applicable local, national, and international laws, as well as the terms of service of any targeted platforms.
+
+
 <h2 align="center">LordRequests (v0.9.2)</h2>
 
 <h4 align="center">
@@ -1490,6 +1494,17 @@ Target a specific state, province, or territory. Residential and Mobile proxies 
 >>> proxy = evomi.ResidentialProxy(region='California', ...)
 >>> proxy = evomi.ResidentialProxy(region='Southern Cape', ...)
 ```
+
+---
+
+## Ethical Use Policy
+
+By using LordRequests, you agree to the following terms:
+
+1. **Lawful Intent**: You will not use this tool for unauthorized data collection, credential stuffing, or any form of cyberattack.
+2. **Respect for Privacy**: You will respect the privacy of individuals and the data policies of organizations.
+3. **Open Source Spirit**: Improvements to the core engine should be shared back with the community to enhance stealth and security for everyone.
+4. **Attribution**: You will maintain original author attribution in all redistributed versions of this software.
 
 ---
 
