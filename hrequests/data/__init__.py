@@ -12,4 +12,5 @@ from .visual_diff import VisualChangeDetector
 from .table_extractor import TableExtractor
 from .contact_scanner import ContactScanner
 from .link_auditor import BrokenLinkAuditor
+from .summarizer import ContentSummarizer
 # Future imports will be added here
