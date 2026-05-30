@@ -12,4 +12,5 @@ from .captcha import CaptchaSolver
 from .honeypot import HoneypotFilter
 from .pivot import HeadlessPivot
 from .persistence import SessionPersistence
+from .proxy_health import ProxyAutoHealer
 # Future imports will be added here
