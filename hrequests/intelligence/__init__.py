@@ -10,4 +10,5 @@ from .shadow_api import to_api_script
 from .price_auditor import PriceAuditor
 from .phantom import PhantomMirror
 from .ai_audit import AIProvenanceAuditor
+from .optimizer import ContentOptimizer
 # Future imports will be added here
