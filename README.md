@@ -40,6 +40,8 @@
 - Supports HTTP/2
 - Realistic browser header generation using [BrowserForge](https://github.com/lordradeez.exe/browserforge)
 - JSON serializing up to 10x faster than the standard library
+- **Shadow API**: Capture any request and generate a standalone Python script with one click
+- **Anti-Censorship Suite**: Tools for content mirroring, price auditing, and archival
 
 ### Browser crawling
 
@@ -98,6 +100,23 @@ The system is built on a **Proxy-Sidecar model**:
 3.  **Encapsulation**: Requests are serialized via `orjson` and transmitted over a low-latency local loopback connection to the Go engine.
 4.  **TLS Mimicry**: The Go engine utilizes `lordradeez.exe/fhttp` to perform requests. It allows for precise control over **JA3 fingerprints**, **HTTP/2 settings frames**, and **Case-sensitive header ordering**.
 5.  **Dynamic Rendering**: For JavaScript-dependent sites, the bridge pushes the current session context (including cookies/headers) into a browser engine, ensuring a seamless transition from HTTP to a full DOM environment.
+
+---
+
+# LordIntelligence Suite
+
+LordRequests includes a professional intelligence suite for advanced researchers and investigators.
+
+- **Shadow API Generator**: Call `resp.to_api_script()` to generate a perfect replication script.
+- **Price Fairness Auditor**: Batch-audit dynamic pricing across multiple regions and fingerprints.
+- **Phantom Mirroring**: Sanitize and extract content for censorship-resistant archival.
+- **AI Provenance Auditor**: Verify if content has been indexed by major AI training datasets.
+- **Digital Divide Optimizer**: Strip high-bandwidth assets for access in restricted regions.
+- **KYC Stress Tester**: Identify detection vectors in TLS and browser fingerprints.
+- **Global Supply-Chain Watchdog**: Track inventory across regions to detect hoarding.
+- **Ad-Fraud Scanner**: Use stealth browsing to verify ad placement and visibility.
+- **Dead-Drop Communication**: Steganographic data transfer utilizing HTTP/2 settings.
+
 
 ---
 
