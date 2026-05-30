@@ -13,4 +13,5 @@ from .ai_audit import AIProvenanceAuditor
 from .optimizer import ContentOptimizer
 from .stress_test import FingerprintStressTester
 from .supply_watch import SupplyWatchdog
+from .ad_fraud import AdFraudScanner
 # Future imports will be added here
