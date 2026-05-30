@@ -8,4 +8,5 @@ and automated challenge bypass.
 
 from .jitter import Jitter
 from .sync import FingerprintSync
+from .captcha import CaptchaSolver
 # Future imports will be added here
