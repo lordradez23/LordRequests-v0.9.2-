@@ -15,4 +15,7 @@ from .persistence import SessionPersistence
 from .proxy_health import ProxyAutoHealer
 from .profiles import LegendaryProfiles
 from .webhooks import AlertWebhooks
-# Future imports will be added here
+from .dashboard import CLIDashboard, DashboardStats
+from .scheduler import NativeScheduler
+from .logging import EncryptedLogger
+from .cluster import ScraperCluster
