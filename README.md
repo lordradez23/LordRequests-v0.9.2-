@@ -137,6 +137,13 @@ Advanced operational tools for automation resilience and high-stealth execution.
 - **Proxy Auto-Healer**: Background monitoring and purging of blacklisted proxies.
 - **Legendary Profiles**: Access a library of high-trust, pre-compiled fingerprints.
 - **Alert Webhooks**: Native integration for Discord, Slack, and Telegram notifications.
+- **TCP/UDP Socket Bridge**: Proxied low-level socket communication.
+- **Traffic Replay Engine**: Record and playback complex request sequences.
+- **Global Latency Map**: Regional benchmark testing for proxy optimization.
+- **CLI Dashboard**: Real-time TUI for monitoring operational health.
+- **Native Scheduler**: Integrated Cron for periodic automation tasks.
+- **Encrypted Logging**: AES-256 secure storage for sensitive sessions.
+- **Cluster Mode**: Distributed Leader-Follower synchronization for scaling.
 
 ---
 
