@@ -124,6 +124,22 @@ LordRequests includes a professional intelligence suite for advanced researchers
 
 ---
 
+# LordOperations Suite
+
+Advanced operational tools for automation resilience and high-stealth execution.
+
+- **Persona Jitter**: Randomize request timing with AI-heuristic human profiles.
+- **UA-Fingerprint Sync**: Ensure technical consistency between User-Agents and TLS profiles.
+- **CAPTCHA solver Bridge**: Integrated hooks for automated challenge bypass.
+- **Honeypot Filter**: Automatically detect and ignore hidden bot-traps in the DOM.
+- **Headless Pivot**: Instant, automated failover from CFFI to full Browser rendering.
+- **Encrypted Persistence**: Secure AES-256 serialization of full Session states.
+- **Proxy Auto-Healer**: Background monitoring and purging of blacklisted proxies.
+- **Legendary Profiles**: Access a library of high-trust, pre-compiled fingerprints.
+- **Alert Webhooks**: Native integration for Discord, Slack, and Telegram notifications.
+
+---
+
 # Installation
 
 Install via pip:
