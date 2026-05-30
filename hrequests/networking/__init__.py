@@ -12,4 +12,5 @@ from .rate_limit import RateLimiter
 from .tls_inspect import TLSInspector
 from .h2_tuner import H2Tuner
 from .persona import PersonaGenerator
+from .kill_switch import ProxyKillSwitch
 # Future imports will be added here
