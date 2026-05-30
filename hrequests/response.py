@@ -157,6 +157,7 @@ class Response:
     encoding: str = 'UTF-8'
     is_utf8: bool = True
     proxy: Optional[str] = None
+    _request_data: Optional[dict] = None
 
     def __post_init__(self) -> None:
         if type(self.raw) is not bytes:
@@ -166,6 +167,14 @@ class Response:
             self.raw = _decode_zstd(self.raw)
         # Detect encoding
         self.encoding = chardet.detect(self.raw)['encoding']
+
+    def to_api_script(self) -> str:
+        '''
+        Generates a standalone Python script that replicates this request.
+        Requires the intelligence module.
+        '''
+        from hrequests.intelligence.shadow_api import generate_script
+        return generate_script(self)
 
     @property
     def reason(self) -> str:
@@ -294,7 +303,10 @@ def parse_header_links(value):
 
 
 def build_response(
-    res: Union[dict, list], res_cookies: RequestsCookieJar, proxy: Optional[str]
+    res: Union[dict, list],
+    res_cookies: RequestsCookieJar,
+    proxy: Optional[str],
+    request_data: Optional[dict] = None,
 ) -> Response:
     '''Builds a Response object'''
     # build headers
@@ -323,4 +335,6 @@ def build_response(
         is_utf8=not res.get('isBase64'),
         # add proxy
         proxy=proxy,
+        # add request data
+        _request_data=request_data,
     )

@@ -393,6 +393,7 @@ class TLSClient:
         headers: Optional[Union[dict, CaseInsensitiveDict]],
         response_object: dict,
         proxy: str,
+        request_payload: Optional[dict] = None,
     ):
         if response_object['status'] == 0:
             raise ClientException(response_object['body'])
@@ -404,7 +405,9 @@ class TLSClient:
             response_headers=response_object['headers'],
         )
         # build response class
-        return hrequests.response.build_response(response_object, response_cookie_jar, proxy)
+        return hrequests.response.build_response(
+            response_object, response_cookie_jar, proxy, request_payload
+        )
 
     def build_response(
         self,
@@ -412,6 +415,7 @@ class TLSClient:
         headers: Optional[Union[dict, CaseInsensitiveDict]],
         response_object: dict,
         proxy: str,
+        request_payload: Optional[dict] = None,
     ):  # sourcery skip: assign-if-exp
         history: list = []
         if not response_object['isHistory']:
@@ -424,7 +428,9 @@ class TLSClient:
             else:
                 # use the original url
                 item_url = url
-            history.append(self.build_response_obj(item_url, headers, item, proxy))
+            history.append(
+                self.build_response_obj(item_url, headers, item, proxy, request_payload)
+            )
         # assign history to last response
         resp = history[-1]
         resp.history = history[:-1]
@@ -452,4 +458,6 @@ class TLSClient:
         except Exception as e:
             raise ClientException('Request failed') from e
         # build response class
-        return self.build_response(url, headers, response_object, request_payload['proxyUrl'])
+        return self.build_response(
+            url, headers, response_object, request_payload['proxyUrl'], request_payload
+        )
