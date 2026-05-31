@@ -1,7 +1,7 @@
-'''
+"""
 WAF-Specific Header Tuner.
 Presets for dealing with specific firewalls like Cloudflare or Akamai.
-'''
+"""
 
 from typing import Dict
 

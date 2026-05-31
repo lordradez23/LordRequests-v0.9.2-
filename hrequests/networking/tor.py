@@ -1,8 +1,6 @@
 '''
-Tor-Bridge Integration
-~~~~~~~~~~~~~~~~~~~~~~
-
-Provides automated routing of LordRequests traffic through the Tor network.
+Tor-Bridge Integration.
+Lets you route all your traffic through the Tor network automatically.
 '''
 
 import hrequests

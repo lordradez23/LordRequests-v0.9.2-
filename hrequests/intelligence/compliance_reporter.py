@@ -1,8 +1,6 @@
 '''
-Automated Compliance Reporter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Generates summarized reports on robots.txt and ToS compliance for auditing.
+Compliance Reporter.
+Summarizes robots.txt and ToS audits to keep everything clean and legal.
 '''
 
 from typing import Dict, List

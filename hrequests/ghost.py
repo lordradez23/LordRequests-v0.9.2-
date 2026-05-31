@@ -1,8 +1,8 @@
-'''
+"""
 The "Ghost" Mode Protocol.
 Basically a big red button that turns on all our stealth toys at once 
 so we don't get caught during heavy operations.
-'''
+"""
 
 from hrequests.networking.fingerprints import UnifiedFingerprinter
 from hrequests.networking.webrtc import WebRTCHandler

@@ -1,7 +1,7 @@
-'''
+"""
 Form Auto-Fill tool.
 Tries to guess what each form field is and fills it in using our identity data.
-'''
+"""
 
 from hrequests.parser import Element
 from typing import Dict, Any

@@ -1,7 +1,7 @@
-'''
+"""
 Native SSH Tunneling.
 Lets us use an SSH server as a proxy directly.
-'''
+"""
 
 import socket
 import threading
