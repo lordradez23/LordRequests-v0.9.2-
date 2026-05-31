@@ -225,6 +225,34 @@ class BaseParser:
 
         return _get_first_or_list(elements, first)
 
+    def find_semantic(self, purpose: str, first: bool = True) -> _Find:
+        '''
+        Finds elements by their semantic purpose (e.g. 'login', 'submit', 'search').
+        
+        Args:
+            purpose: The keyword to search for (e.g., 'login', 'email', 'submit').
+            first: Whether to return only the first match.
+        '''
+        semantic_map = {
+            'login': ['login', 'sign-in', 'signin', 'log-in'],
+            'submit': ['submit', 'send', 'confirm', 'ok'],
+            'search': ['search', 'find', 'query'],
+            'email': ['email', 'e-mail', 'mail', 'username', 'u-name'],
+            'password': ['password', 'pass', 'pwd', 'passwd']
+        }
+        
+        keywords = semantic_map.get(purpose.lower(), [purpose])
+        
+        # Priority 1: ID or Name match
+        for kw in keywords:
+            found = self.find_all(f'[id*="{kw}" i], [name*="{kw}" i], [placeholder*="{kw}" i]', first=first, raise_exception=False)
+            if found:
+                return found
+                
+        # Priority 2: Text content match for buttons/links
+        found = self.find_all('button, input[type="submit"], a', containing=keywords, first=first, raise_exception=False)
+        return found
+
     def find(
         self,
         selector: str = "*",
