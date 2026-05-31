@@ -1,9 +1,6 @@
 '''
-Timezone/Locale Proxy-Sync
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Automatically aligns browser context (Timezone, Locale, Geolocation)
-with the proxy IP address to maintain identity consistency.
+Timezone/Locale Proxy-Sync.
+Matches your browser's timezone and language settings to your proxy IP.
 '''
 
 import hrequests
@@ -11,7 +8,7 @@ from typing import Dict, Optional
 
 class GeoSync:
     '''
-    Detects geo-metadata from a proxy and generates browser configuration.
+    Finds where our proxy is and makes sure the browser matches that location.
     '''
     def __init__(self, proxy: Optional[str] = None):
         self.proxy = proxy
@@ -19,23 +16,24 @@ class GeoSync:
 
     def fetch_metadata(self) -> bool:
         '''
-        Fetches geolocation metadata from the proxy IP.
+        Checks the proxy's IP info using ip-api.com.
         '''
         try:
-            # Use ip-api.com (JSON) for speed and detail
+            # We use ip-api.com because it's fast and gives us everything we need
             resp = hrequests.get("http://ip-api.com/json/", proxy=self.proxy, timeout=10)
             if resp.status_code == 200:
                 self.metadata = resp.json()
                 return self.metadata.get('status') == 'success'
         except Exception as e:
-            print(f"[GeoSync] Failed to fetch metadata: {e}")
+            print(f"[GeoSync] Couldn't grab IP metadata: {e}")
         return False
 
     def get_browser_config(self) -> Dict[str, any]:
         '''
-        Generates a dictionary compatible with BrowserSession/Playwright configuration.
+        Builds a config dict we can just feed into the browser session.
         '''
         if not self.metadata:
+            # If we haven't fetched it yet, do it now
             if not self.fetch_metadata():
                 return {}
 
@@ -52,7 +50,7 @@ class GeoSync:
 
     def get_headers(self) -> Dict[str, str]:
         '''
-        Generates Accept-Language headers based on the proxy location.
+        Sets the Accept-Language header based on where the proxy is located.
         '''
         if not self.metadata:
             self.fetch_metadata()

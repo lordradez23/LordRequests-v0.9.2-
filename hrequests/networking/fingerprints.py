@@ -1,9 +1,7 @@
 '''
-Unified Browser Fingerprinters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Merges Canvas, WebGL, and Audio fingerprints into a single synchronized identity
-to defeat cross-attribute correlation in bot detection.
+Unified Browser Fingerprinting.
+Merges Canvas, WebGL, and Audio spoofing into one sync'd up identity 
+so we don't get flagged for mismatched attributes.
 '''
 
 import random
@@ -11,7 +9,7 @@ from typing import Dict
 
 class UnifiedFingerprinter:
     '''
-    Generates synchronized JS payloads for Canvas, WebGL, and Audio spoofing.
+    Handles the JS generation for our "identity" across different browser APIs.
     '''
     def __init__(self, seed: int = None):
         if seed is not None:
@@ -22,11 +20,11 @@ class UnifiedFingerprinter:
 
     def get_unified_payload(self) -> str:
         '''
-        Returns a single combined JS snippet for all fingerprinting surfaces.
+        Throws all the spoofing logic into a single JS blob we can inject.
         '''
         return f"""
         (function() {{
-            // --- Synchronized Canvas Spoofing ---
+            // --- Fake Canvas data ---
             const originalGetImageData = CanvasRenderingContext2D.prototype.getImageData;
             CanvasRenderingContext2D.prototype.getImageData = function() {{
                 const results = originalGetImageData.apply(this, arguments);
@@ -36,7 +34,7 @@ class UnifiedFingerprinter:
                 return results;
             }};
 
-            // --- Synchronized WebGL Spoofing ---
+            // --- Fake WebGL vendor/renderer ---
             const originalGetParameter = WebGLRenderingContext.prototype.getParameter;
             WebGLRenderingContext.prototype.getParameter = function(parameter) {{
                 if (parameter === 37445) return "{self.vendor}"; // UNMASKED_VENDOR_WEBGL
@@ -44,7 +42,7 @@ class UnifiedFingerprinter:
                 return originalGetParameter.apply(this, arguments);
             }};
 
-            // --- Synchronized Audio Spoofing ---
+            // --- Tiny noise in audio to throw off fingerprinting ---
             const originalGetChannelData = AudioBuffer.prototype.getChannelData;
             AudioBuffer.prototype.getChannelData = function() {{
                 const results = originalGetChannelData.apply(this, arguments);
@@ -54,12 +52,12 @@ class UnifiedFingerprinter:
                 return results;
             }};
 
-            console.log("[LordRequests] Unified Fingerprinting Payload Injected.");
+            console.log("[LordRequests] Fingerprinting payload injected.");
         }})();
         """
 
     def get_config(self) -> Dict[str, str]:
-        '''Returns the current identity configuration.'''
+        '''Just returns what we're currently spoofing.'''
         return {
             "vendor": self.vendor,
             "renderer": self.renderer,

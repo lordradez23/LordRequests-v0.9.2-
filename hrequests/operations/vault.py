@@ -1,9 +1,6 @@
 '''
-Multi-Profile Identity Vault
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Encrypted storage for "Legendary" identities and session profiles
-to maintain reputation and historical consistency.
+Multi-Profile Identity Vault.
+Safe spot to keep our encrypted "Legendary" identities and session profiles.
 '''
 
 import json
@@ -14,12 +11,12 @@ try:
     from cryptography.hazmat.primitives import hashes
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 except ImportError:
-    # Fallback or alert user
+    # We'll handle this later if they actually try to use the vault
     Fernet = None
 
 class IdentityVault:
     '''
-    Manages encrypted storage for user identities and browser profiles.
+    Handles encrypted storage so we don't leak our browser profiles.
     '''
     def __init__(self, vault_path: str, secret_key: str):
         self.vault_path = vault_path
@@ -30,10 +27,10 @@ class IdentityVault:
             self.cipher = None
 
     def _derive_key(self, password: str) -> bytes:
-        '''Derives a cryptographic key from a password.'''
+        '''Turn a password into a real crypto key.'''
         if not Fernet:
             return b''
-        salt = b'lordrequests_salt' # Fixed salt for simplicity in this version
+        salt = b'lordrequests_salt' # Should probably be random but keeping it simple for now
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -44,10 +41,10 @@ class IdentityVault:
 
     def save_identity(self, name: str, profile_data: Dict):
         '''
-        Encrypts and saves a profile to the vault.
+        Encrypts a profile and sticks it in the vault file.
         '''
         if not self.cipher:
-            raise ImportError("cryptography library required for IdentityVault")
+            raise ImportError("You need 'cryptography' installed to use the IdentityVault.")
             
         try:
             with open(self.vault_path, 'r') as f:
@@ -55,6 +52,7 @@ class IdentityVault:
         except (FileNotFoundError, json.JSONDecodeError):
             vault = {}
 
+        # Encrypt the JSON data before saving
         encrypted_data = self.cipher.encrypt(json.dumps(profile_data).encode()).decode()
         vault[name] = encrypted_data
         
@@ -63,16 +61,17 @@ class IdentityVault:
 
     def load_identity(self, name: str) -> Optional[Dict]:
         '''
-        Loads and decrypts a profile from the vault.
+        Pulls a profile from the vault and decrypts it.
         '''
         if not self.cipher:
-            raise ImportError("cryptography library required for IdentityVault")
+            raise ImportError("You need 'cryptography' installed to use the IdentityVault.")
 
         try:
             with open(self.vault_path, 'r') as f:
                 vault = json.load(f)
             
             if name in vault:
+                # Decrypt and turn back into a dict
                 decrypted_bytes = self.cipher.decrypt(vault[name].encode())
                 return json.loads(decrypted_bytes.decode())
         except Exception as e:

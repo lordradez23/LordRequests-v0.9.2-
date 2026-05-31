@@ -1,15 +1,13 @@
 '''
-WAF-Specific Header Tuner
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Presets for bypassing specific Web Application Firewalls (Cloudflare, Akamai, Imperva).
+WAF-Specific Header Tuner.
+Presets for dealing with specific firewalls like Cloudflare or Akamai.
 '''
 
 from typing import Dict
 
 class WAFTuner:
     '''
-    Provides header and TLS presets for specific WAF bypass scenarios.
+    Gives us the right headers and TLS settings to slip past specific WAFs.
     '''
     PRESETS = {
         'cloudflare': {
@@ -45,12 +43,13 @@ class WAFTuner:
 
     @classmethod
     def get_preset(cls, name: str) -> Dict:
+        '''Pulls a preset by name (case-insensitive).'''
         return cls.PRESETS.get(name.lower(), {})
 
     @classmethod
     def apply_to_session(cls, session, waf_name: str):
         '''
-        Applies a WAF preset to an hrequests Session.
+        Injects the WAF preset into an active session.
         '''
         preset = cls.get_preset(waf_name)
         if not preset:
