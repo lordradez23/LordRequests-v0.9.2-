@@ -1,8 +1,6 @@
 '''
-Automated Form-Auto-Fill
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Intelligent form detection and population using Persona identity data.
+Form Auto-Fill tool.
+Tries to guess what each form field is and fills it in using our identity data.
 '''
 
 from hrequests.parser import Element
@@ -10,7 +8,7 @@ from typing import Dict, Any
 
 class FormFiller:
     '''
-    Detects form fields and populates them with provided identity data.
+    Finds form fields and stuffs them with identity data so we don't have to.
     '''
     FIELD_MAP = {
         'first_name': ['first-name', 'fname', 'given-name', 'first_name'],
@@ -28,10 +26,11 @@ class FormFiller:
 
     def fill_form(self, form_element: Element):
         '''
-        Finds all inputs in the form and fills them if a match is found in identity.
+        Goes through all inputs in a form and tries to match them to our identity keys.
         '''
         inputs = form_element.find_all('input, select, textarea')
         for input_el in inputs:
+            # Grab all the attributes we can use to guess the field type
             attr_strings = [
                 input_el.attrs.get('id', ''),
                 input_el.attrs.get('name', ''),
@@ -42,16 +41,16 @@ class FormFiller:
             filled = False
             for identity_key, html_keywords in self.FIELD_MAP.items():
                 if identity_key in self.identity:
-                    # Check if any attribute contains a keyword
+                    # If we find a keyword in any of the attributes, we'll assume it's a match
                     if any(any(kw in attr.lower() for kw in html_keywords) for attr in attr_strings if attr):
-                        # Use browser session to type if available
+                        # Type it into the browser if we're in a browser session
                         if hasattr(input_el, 'type'):
                             input_el.type(str(self.identity[identity_key]))
                             filled = True
                             break
             
             if not filled:
-                print(f"[FormFiller] Could not determine purpose of input: {attr_strings}")
+                print(f"[FormFiller] No clue what this input is: {attr_strings}")
 
     @classmethod
     def apply(cls, form: Element, identity: Dict[str, Any]):

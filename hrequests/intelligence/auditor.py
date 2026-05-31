@@ -1,8 +1,6 @@
 '''
-Broken Link Deep-Auditor
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Recursive checker for cross-domain broken link analysis and dead-end detection.
+Broken Link Deep-Auditor.
+Goes through a site recursively to find dead links and external references.
 '''
 
 import hrequests
@@ -12,7 +10,7 @@ from urllib.parse import urlparse
 
 class LinkAuditor:
     '''
-    Audits broad sets of links for availability and health.
+    Crawls through links to see which ones are actually alive.
     '''
     def __init__(self, start_url: str):
         self.start_url = start_url
@@ -23,7 +21,7 @@ class LinkAuditor:
 
     def audit(self, depth: int = 2):
         '''
-        Recursively audits links up to a specific depth.
+        Starts the crawl. depth=0 means just the start page.
         '''
         self._check_url(self.start_url, depth)
         return {
@@ -33,6 +31,7 @@ class LinkAuditor:
         }
 
     def _check_url(self, url: str, depth: int):
+        # Don't visit the same page twice or go too deep
         if depth < 0 or url in self.visited:
             return
         
@@ -41,10 +40,12 @@ class LinkAuditor:
         
         try:
             resp = hrequests.get(url, timeout=10)
+            # 400+ means something is wrong (404, 403, etc)
             if resp.status_code >= 400:
                 self.broken[url] = resp.status_code
                 return
             
+            # If it's an internal link, we'll follow it if we have depth left
             if depth > 0 and urlparse(url).netloc == self.domain:
                 links = resp.html.absolute_links
                 for link in links:
@@ -53,4 +54,4 @@ class LinkAuditor:
                     else:
                         self._check_url(link, depth - 1)
         except Exception:
-            self.broken[url] = -1 # Connection error
+            self.broken[url] = -1 # Probably a connection timeout or DNS fail

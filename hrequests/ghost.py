@@ -1,9 +1,7 @@
 '''
-The "Ghost" Mode Protocol
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A master switch that enables every stealth feature simultaneously
-for maximum invisibility during high-stakes operations.
+The "Ghost" Mode Protocol.
+Basically a big red button that turns on all our stealth toys at once 
+so we don't get caught during heavy operations.
 '''
 
 from hrequests.networking.fingerprints import UnifiedFingerprinter
@@ -18,12 +16,12 @@ from typing import Dict, List
 
 class GhostProtocol:
     '''
-    Orchestrates all stealth modules into a single "Ghost Mode".
+    Combines every stealth module into one "Ghost Mode" profile.
     '''
     @staticmethod
     def get_stealth_scripts(os_type: str = 'win') -> List[str]:
         '''
-        Returns a list of all JS payloads required for Ghost Mode.
+        Gathers all the JS payloads we need to keep the browser invisible.
         '''
         scripts = [
             UnifiedFingerprinter().get_unified_payload(),
@@ -39,12 +37,12 @@ class GhostProtocol:
     @staticmethod
     def enable(browser_session, persona: str = 'researcher'):
         '''
-        Applies Ghost Mode to a BrowserSession.
+        Actually sticks the ghost mode scripts into the session and sets up jitter.
         '''
         scripts = GhostProtocol.get_stealth_scripts()
         for script in scripts:
             browser_session.execute_script(script)
         
-        # Apply intelligent jitter
+        # Add some human-like timing so we aren't behaving like a bot
         browser_session.jitter = IntelligentJitter(persona=persona)
-        print("[LordRequests] Ghost Mode Protocol: FULLY ENGAGED.")
+        print("[LordRequests] Ghost Mode Protocol: ENGAGED.")
