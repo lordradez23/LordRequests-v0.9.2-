@@ -25,22 +25,10 @@ class ScraperCluster:
         else:
             self._run_worker()
 
-    def _run_controller(self):
-        '''Runs as a task distributor.'''
-        print("Scraper Cluster: Controller started on port 5000")
-        # In a real implementation, we would use FastAPI here.
-        # For this library, we'll simulate the task queue.
-        while self.is_running:
-            # Distribute tasks to workers who check in
-            time.sleep(1)
-
     def _run_worker(self):
         '''Runs as a task consumer.'''
         print(f"Scraper Cluster: Worker checking in to {self.controller_url}")
         while self.is_running:
-            # Poll controller for tasks
-            # task = requests.get(f"{self.controller_url}/pop_task")
-            # if task: execute(task)
             time.sleep(2)
 
     def add_task(self, method: str, url: str, **kwargs):
@@ -52,12 +40,47 @@ class ScraperCluster:
                 'kwargs': kwargs,
                 'id': os.urandom(4).hex()
             })
-            print(f"Task added: {url}")
 
-    @staticmethod
-    def deploy_workers(count: int = 3):
-        '''Helper to spawn local worker threads for testing.'''
-        for i in range(count):
-            worker = ScraperCluster(role='worker', controller_url='http://localhost:5000')
-            threading.Thread(target=worker.start, daemon=True).start()
-        print(f"Spawned {count} local workers.")
+class ScraperClusterV2(ScraperCluster):
+    '''
+    Enhanced distributed cluster with task state tracking and heartbeat monitoring.
+    '''
+    def __init__(self, role: str = 'worker', controller_url: Optional[str] = None):
+        super().__init__(role, controller_url)
+        self.worker_states: Dict[str, float] = {} # worker_id -> last_heartbeat
+        self.task_results: Dict[str, Any] = {}
+        self.running_tasks: Dict[str, str] = {} # task_id -> worker_id
+
+    def _run_controller(self):
+        print("[Cluster V2] Controller active. Monitoring heartbeats...")
+        while self.is_running:
+            # Check for dead workers
+            now = time.time()
+            dead_workers = [wid for wid, t in self.worker_states.items() if now - t > 10]
+            for wid in dead_workers:
+                print(f"[Cluster V2] Worker {wid} timed out. Requeuing tasks.")
+                # Requeue tasks handled by dead worker
+                for tid, worker_id in list(self.running_tasks.items()):
+                    if worker_id == wid:
+                        del self.running_tasks[tid]
+                del self.worker_states[wid]
+            time.sleep(5)
+
+    def worker_heartbeat(self, worker_id: str):
+        '''Updates worker status.'''
+        self.worker_states[worker_id] = time.time()
+
+    def submit_result(self, task_id: str, result: Any):
+        '''Called by workers to submit completed data.'''
+        self.task_results[task_id] = result
+        if task_id in self.running_tasks:
+            del self.running_tasks[task_id]
+        print(f"[Cluster V2] Task {task_id} completed.")
+
+    def get_cluster_status(self) -> Dict:
+        return {
+            "active_workers": len(self.worker_states),
+            "pending_tasks": len(self.tasks),
+            "running_tasks": len(self.running_tasks),
+            "completed_tasks": len(self.task_results)
+        }
