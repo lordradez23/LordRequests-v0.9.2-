@@ -25,9 +25,9 @@ class FormFiller:
         self.identity = identity
 
     def fill_form(self, form_element: Element):
-        '''
+        """
         Goes through all inputs in a form and tries to match them to our identity keys.
-        '''
+        """
         inputs = form_element.find_all('input, select, textarea')
         for input_el in inputs:
             # Grab all the attributes we can use to guess the field type

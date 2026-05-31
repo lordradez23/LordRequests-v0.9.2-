@@ -1,7 +1,7 @@
-'''
+"""
 Multi-Profile Identity Vault.
 Safe spot to keep our encrypted "Legendary" identities and session profiles.
-'''
+"""
 
 import json
 import base64
